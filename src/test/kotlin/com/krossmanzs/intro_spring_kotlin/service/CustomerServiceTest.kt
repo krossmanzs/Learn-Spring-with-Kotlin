@@ -1,7 +1,6 @@
 package com.krossmanzs.intro_spring_kotlin.service
 
 import com.krossmanzs.intro_spring_kotlin.datasource.CustomerDataSource
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
