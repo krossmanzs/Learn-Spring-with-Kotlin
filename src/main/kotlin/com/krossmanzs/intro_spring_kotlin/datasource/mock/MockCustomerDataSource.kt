@@ -27,4 +27,16 @@ class MockCustomerDataSource : CustomerDataSource{
 
         return customer
     }
+
+    override fun updateCustomer(customer: Customer): Customer {
+        val currentBank = customers.firstOrNull { it.email == customer.email }
+            ?: throw NoSuchElementException("Could not find a customer with email ${customer.email}")
+
+        if (currentBank != customer) {
+            customers.remove(currentBank)
+            customers.add(customer)
+        }
+
+        return customer
+    }
 }

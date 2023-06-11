@@ -6,4 +6,5 @@ interface CustomerDataSource {
     fun retrieveCustomers(): Collection<Customer>
     fun retrieveCustomer(email: String): Customer
     fun createCustomer(customer: Customer): Customer
+    fun updateCustomer(customer: Customer): Customer
 }

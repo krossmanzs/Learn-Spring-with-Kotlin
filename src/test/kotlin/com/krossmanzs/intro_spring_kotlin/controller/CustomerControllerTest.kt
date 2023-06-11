@@ -1,6 +1,7 @@
 package com.krossmanzs.intro_spring_kotlin.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jsonMapper
 import com.krossmanzs.intro_spring_kotlin.model.Customer
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -10,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.get
-import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.*
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -104,6 +103,9 @@ class CustomerControllerTest @Autowired constructor(
                     jsonPath("$.email") { value("abc@gmail.com") }
                     jsonPath("$.phone") { value("081234565") }
                 }
+
+            mockMvc.get("$baseUrl/${newCustomer.email}")
+                .andExpect{ content { objectMapper.writeValueAsString(newCustomer) } }
         }
 
         @Test
@@ -128,6 +130,62 @@ class CustomerControllerTest @Autowired constructor(
                 .andExpect {
                     status { isBadRequest() }
                 }
+        }
+    }
+
+    @Nested
+    @DisplayName("PATCH /api/customers")
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class patchExistingCustomer {
+        @Test
+        fun `should update a customer`() {
+            // given
+            val customer = Customer(
+                "Jane",
+                "Smith",
+                "janesmith@example.com",
+                "987-654-3210")
+
+            // when
+            val performPatchRequest = mockMvc.patch(baseUrl) {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(customer)
+            }
+
+            // then
+            performPatchRequest
+                .andDo { print() }
+                .andExpect {
+                    status { isOk() }
+                    content {
+                        content { MediaType.APPLICATION_JSON }
+                        json(objectMapper.writeValueAsString(customer))
+                    }
+                }
+
+            mockMvc.get("$baseUrl/${customer.email}")
+                .andExpect { content { json(objectMapper.writeValueAsString(customer)) } }
+        }
+
+        @Test
+        fun `should return NOT FOUND if email does not exist`() {
+            // given
+            val customer = Customer(
+                "Jane",
+                "Smith",
+                "awikwok.com",
+                "987-654-3210")
+
+            // when
+            val performPatchRequest = mockMvc.patch(baseUrl) {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(customer)
+            }
+
+            // then
+            performPatchRequest
+                .andDo { print() }
+                .andExpect { status { isNotFound() } }
         }
     }
 }

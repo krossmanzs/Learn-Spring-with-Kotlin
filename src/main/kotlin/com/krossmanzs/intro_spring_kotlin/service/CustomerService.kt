@@ -9,4 +9,5 @@ class CustomerService(private val dataSource: CustomerDataSource) {
     fun getCustomers(): Collection<Customer> = dataSource.retrieveCustomers()
     fun getBank(email: String): Customer = dataSource.retrieveCustomer(email)
     fun addCustomer(customer: Customer): Customer = dataSource.createCustomer(customer)
+    fun updateCustomer(customer: Customer): Customer = dataSource.updateCustomer(customer)
 }

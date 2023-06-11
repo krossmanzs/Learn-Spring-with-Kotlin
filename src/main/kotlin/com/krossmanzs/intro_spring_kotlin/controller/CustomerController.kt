@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -34,4 +35,7 @@ class CustomerController(private val service: CustomerService) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun addCustomer(@RequestBody customer: Customer): Customer = service.addCustomer(customer)
+
+    @PatchMapping
+    fun updateBank(@RequestBody customer: Customer): Customer = service.updateCustomer(customer)
 }
