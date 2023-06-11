@@ -12,4 +12,7 @@ class MockCustomerDataSource : CustomerDataSource{
         Customer("Alex", "Johnson", "alexjohnson@example.com", "555-123-4567"),
     )
     override fun retrieveCustomers(): Collection<Customer> = customers
+    override fun retrieveCustomer(email: String): Customer =
+        customers.firstOrNull() { it.email == email }
+            ?: throw NoSuchElementException("Could not find a customer with email $email")
 }

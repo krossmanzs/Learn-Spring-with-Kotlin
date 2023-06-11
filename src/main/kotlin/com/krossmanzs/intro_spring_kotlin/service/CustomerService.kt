@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service
 @Service
 class CustomerService(private val dataSource: CustomerDataSource) {
     fun getCustomers(): Collection<Customer> = dataSource.retrieveCustomers()
+    fun getBank(email: String): Customer = dataSource.retrieveCustomer(email)
 }
