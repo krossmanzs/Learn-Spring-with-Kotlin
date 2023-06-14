@@ -7,4 +7,5 @@ interface CustomerDataSource {
     fun retrieveCustomer(email: String): Customer
     fun createCustomer(customer: Customer): Customer
     fun updateCustomer(customer: Customer): Customer
+    fun deleteCustomer(email: String): Customer
 }

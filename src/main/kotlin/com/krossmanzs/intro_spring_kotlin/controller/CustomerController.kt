@@ -4,6 +4,7 @@ import com.krossmanzs.intro_spring_kotlin.model.Customer
 import com.krossmanzs.intro_spring_kotlin.service.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
@@ -38,4 +39,8 @@ class CustomerController(private val service: CustomerService) {
 
     @PatchMapping
     fun updateBank(@RequestBody customer: Customer): Customer = service.updateCustomer(customer)
+
+    @DeleteMapping("/{email}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteCustomer(@PathVariable email: String): Customer = service.deleteCustomer(email)
 }

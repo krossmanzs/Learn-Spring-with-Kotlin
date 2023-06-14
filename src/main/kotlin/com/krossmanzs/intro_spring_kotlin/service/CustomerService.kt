@@ -10,4 +10,5 @@ class CustomerService(private val dataSource: CustomerDataSource) {
     fun getBank(email: String): Customer = dataSource.retrieveCustomer(email)
     fun addCustomer(customer: Customer): Customer = dataSource.createCustomer(customer)
     fun updateCustomer(customer: Customer): Customer = dataSource.updateCustomer(customer)
+    fun deleteCustomer(email: String): Customer = dataSource.deleteCustomer(email)
 }

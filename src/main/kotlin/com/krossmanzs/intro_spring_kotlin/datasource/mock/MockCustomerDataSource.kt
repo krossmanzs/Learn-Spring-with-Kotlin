@@ -29,13 +29,22 @@ class MockCustomerDataSource : CustomerDataSource{
     }
 
     override fun updateCustomer(customer: Customer): Customer {
-        val currentBank = customers.firstOrNull { it.email == customer.email }
+        val currenCustomer = customers.firstOrNull { it.email == customer.email }
             ?: throw NoSuchElementException("Could not find a customer with email ${customer.email}")
 
-        if (currentBank != customer) {
-            customers.remove(currentBank)
+        if (currenCustomer != customer) {
+            customers.remove(currenCustomer)
             customers.add(customer)
         }
+
+        return customer
+    }
+
+    override fun deleteCustomer(email: String): Customer {
+        val customer = customers.firstOrNull { it.email == email }
+            ?: throw  NoSuchElementException("Could not find a customer with email $email")
+
+        customers.remove(customer)
 
         return customer
     }

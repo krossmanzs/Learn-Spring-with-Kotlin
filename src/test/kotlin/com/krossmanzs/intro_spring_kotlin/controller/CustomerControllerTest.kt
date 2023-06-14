@@ -188,4 +188,34 @@ class CustomerControllerTest @Autowired constructor(
                 .andExpect { status { isNotFound() } }
         }
     }
+
+    @Nested
+    @DisplayName("DELETE /api/customers/{email}")
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class RemoveCustomer {
+        @Test
+        fun `should remove a customer with given email`() {
+            // given
+            val email = "alexjohnson@example.com"
+
+            // when/then
+            mockMvc.delete("$baseUrl/$email")
+                .andDo { print() }
+                .andExpect { status { isNoContent() } }
+
+            mockMvc.get("$baseUrl/${email}")
+                .andExpect { status { isNotFound() } }
+        }
+
+        @Test
+        fun `should return NOT FOUND if email does not exist`() {
+            // given
+            val email = "anjay@gmail.com"
+
+            // when
+            mockMvc.delete("$baseUrl/$email")
+                .andDo { print() }
+                .andExpect { status { isNotFound() } }
+        }
+    }
 }
