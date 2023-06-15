@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 
 @Service
-class CustomerService(@Qualifier("network") private val dataSource: CustomerDataSource) {
+class CustomerService(@Qualifier("mock") private val dataSource: CustomerDataSource) {
     fun getCustomers(): Collection<Customer> = dataSource.retrieveCustomers()
     fun getBank(email: String): Customer = dataSource.retrieveCustomer(email)
     fun addCustomer(customer: Customer): Customer = dataSource.createCustomer(customer)

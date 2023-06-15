@@ -5,7 +5,7 @@ import com.krossmanzs.intro_spring_kotlin.model.Customer
 import org.springframework.stereotype.Repository
 import java.lang.IllegalArgumentException
 
-@Repository
+@Repository("mock")
 class MockCustomerDataSource : CustomerDataSource{
     val customers = mutableListOf(
         Customer("John", "Doe", "johndoe@example.com", "123-456-7890"),

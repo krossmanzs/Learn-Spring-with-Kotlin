@@ -1,7 +1,6 @@
 package com.krossmanzs.intro_spring_kotlin.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jsonMapper
 import com.krossmanzs.intro_spring_kotlin.model.Customer
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -36,7 +35,7 @@ class CustomerControllerTest @Autowired constructor(
                 .andExpect {
                     status { isOk() }
                     content { contentType(MediaType.APPLICATION_JSON) }
-                    jsonPath("$[0].firstName") { value("John") }
+                    jsonPath("$[0].firstname") { value("John") }
                 }
         }
     }
@@ -56,8 +55,8 @@ class CustomerControllerTest @Autowired constructor(
                 .andExpect {
                     status { isOk() }
                     content { contentType(MediaType.APPLICATION_JSON) }
-                    jsonPath("$.firstName") { value("Jane") }
-                    jsonPath("$.lastName") { value("Smith") }
+                    jsonPath("$.firstname") { value("Jane") }
+                    jsonPath("$.lastname") { value("Smith") }
                 }
         }
 
@@ -99,8 +98,8 @@ class CustomerControllerTest @Autowired constructor(
                 .andExpect {
                     status { isCreated() }
                     content { contentType(MediaType.APPLICATION_JSON) }
-                    jsonPath("$.firstName") { value("Cornelius") }
-                    jsonPath("$.lastName") { value("Linux") }
+                    jsonPath("$.firstname") { value("Cornelius") }
+                    jsonPath("$.lastname") { value("Linux") }
                     jsonPath("$.email") { value("abc@gmail.com") }
                     jsonPath("$.phone") { value("081234565") }
                 }
